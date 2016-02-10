@@ -1,0 +1,434 @@
+\documentclass{article}
+
+\usepackage[english]{babel}
+\def\printlandscape{\special{landscape}}    % Works with dvips.
+%\usepackage{pstricks,pst-node,pst-tree}
+\usepackage{amsmath }
+\usepackage[latin2]{inputenc}
+\usepackage[T1]{fontenc} 
+\usepackage{fancybox} % for shadow and Bitemize
+\usepackage{alltt}
+\usepackage{graphicx}
+%\usepackage{epsfig}
+%\usepackage{fullpage}
+%\usepackage{fancyhdr}
+%\usepackage{moreverb}
+\usepackage{xspace}
+%\usepackage[colorlinks,hyperindex,bookmarks,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{wrapfig}
+\usepackage{epsf}
+\usepackage{float}
+
+
+
+\newcommand{\inde}{\perp\!\!\!\!\!\!\perp}
+
+\vspace{7cm}
+\title{\begin{large} ---------\end{large}  \\ 
+\textbf{Road Safety Data Analysis}}
+
+\author{Zohra Umansky\\}
+
+\date{\today}
+%\pagestyle{empty}
+
+%\setcounter{page}{0}
+
+\begin{document}
+
+
+\maketitle
+
+
+
+\begin{abstract}
+This document presents an exploratory and predictive analysis on road safety data. This data set provides details about the circumstances of personal injury road accidents in Great Britain from 2005 to 2012, the types (including Make and Model) of vehicles involved and the consequential casualties. The statistics relate only to personal injury accidents on public roads that are reported to the police, and subsequently recorded, using the STATS19 accident reporting form.
+
+\end{abstract}
+\thispagestyle{empty}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+%-----------------------------------------------------------
+
+\section{Road Safety Data} \label{sec:intro}
+
+\subsection{Database description}
+The Road Safety data set provides statistics collected on personal injury road accidents and their consequent casualties, to a common national standard (STATS19). These data consist in three CSV files corresponding to the three following tables: Accident, Vehicle and Casualty. 
+
+\subsubsection{Accident table}
+The accident table contains information on the accident circumstances that can be summarized as follows: 
+\begin{itemize}
+\item A unique accident index (Accident Index)
+\item Information on the damages (Accident Severity, Number of Vehicles, Number of Casualties) 
+\item Day and time (Date, Day of the week, Time) 
+\item Information on the location (Location Easting OSGR, Location Northing OSGR, Longitude, Latitude, Police Force, Local Authority District/Highway, LSOA, Urban or Rural Area) 
+\item Information on the road (1st Road Class, 1st Road Number, Road Type, Speed limit, Junction Detail, Junction Control, 2nd Road Class, 2nd Road Number, Pedestrian Crossing Human Control, Pedestrian Crossing Physical Facilities)
+\item Weather information (Light Conditions, Weather Conditions, Road Surface Conditions)
+\item Circumstances (Special Conditions at Site, Carriageway Hazards, Did Police Officer Attend Scene of Accident)
+\end{itemize}
+
+The accident table contains a sample of $1,355,615$ accidents recorded according to the previous $32$ variables. The value $-1$ is used to report missing data. 
+
+\subsubsection{Vehicle table}
+The vehicle table contains information the vehicles involved in the accident and can be summarized as follows: 
+\begin{itemize}
+\item the accident index (Accident Index)
+\item A vehicle reference number (Vehicle Reference) 
+\item Information on the vehicle (Vehicle Type, Towing and Articulation, Engine Capacity, Vehicle Propulsion Code, Age of Vehicle, Was Vehicle Left Hand Drive)
+\item Information on the driver (Sex of Driver, Age Band of Driver, Driver IMD Decile, Driver Home Area Type) 
+\item Circumstances (Vehicle Manoeuvre, Vehicle Location-Restricted Lane, Junction Location, Skidding and Overturning, Hit Object in Carriageway, Vehicle Leaving Carriageway, Hit Object off Carriageway, 1st Point of Impact, Journey Purpose of Drive)
+\end{itemize}
+
+The vehicle table contains a sample of $2,482,985$ vehicles involved in accidents and recorded according to the previous $21$ variables. The value $-1$ reports missing data. 
+
+
+\subsubsection{Casualty table}
+The casualty table contains information the casualties involved in the accident and can be summarized as follows: 
+\begin{itemize}
+\item the accident index (Accident Index)
+\item the vehicle reference number (Vehicle Reference) 
+\item a casualty reference number (Casualty Reference)
+\item Information on the casualty (Casualty Class, Sex of Casualty, Age Band of Casualty, Casualty Severity, Casualty Type, Casualty IMD Decile, Casualty Home Area Type) 
+\item Circumstances (Pedestrian Location, Pedestrian Movement, Car Passenger, Bus or Coach Passenger, Pedestrian Road Maintenance Worker)
+\end{itemize}
+
+The casualty table contains a sample of $1,838,573$ casualties involved in accidents and recorded according to the previous $14$ variables. The value $-1$ reports missing data. 
+
+\subsection{Data processing}
+
+In order to achieve the data analysis the three previous tables were merged into one main table.
+The Vehicle and Casualty tables were joined according to the accident index and the vehicle reference. The resulting table were then merged with the accident table according to the accident index.
+All the data cleaning, visualisation and analysis was done with R.
+
+
+
+
+\section{Data characteristics}
+
+\subsection*{Safety performance}
+The Road Safety Database provides $8$ years of  records on road accidents. The safety performances can be observed from 2005 to 1012 (Figure \ref{fig:NbAccYear}).\\
+
+The figure provides the number of accidents against the different years. This is represented by giving:
+
+\begin{itemize}
+\item The total number of road accident (black)
+\item The number of slight accidents (green)
+\item The number of serious accidents (blue)
+\item The number of fatal accidents (red)
+\end{itemize}
+
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=9cm]{Images/NbAccYear}
+  \caption{Road Accidents in GB between 2005 and 2012. Total (black), slight (green), serious (blue), fatal (red)}
+  \label{fig:NbAccYear}
+\end{figure}
+
+It can be seen that the total number of road is largely influenced by the number of slight accident. A focus on the the number of serious accidents (blue) and the number of fatal accidents (red) against the different years is given for a better observation of these statistics (Figure \ref{fig:NbAccYear_FC}). Generally a reduction of fatal road accidents is observed from one year to another, except in 2011 compared with 2010. 
+
+
+\begin{figure}[!h]
+\vspace{-2cm}
+  \centering
+  \includegraphics[width=9cm]{Images/NbAccYear_FC}
+  \caption{Fatal (red) and Serious (blue) road accidents in GB between 2005 and 2012}
+  \label{fig:NbAccYear_FC}
+  
+\end{figure} 
+
+
+
+\subsubsection*{Road casualties seasonality}
+
+The Road Safety Database includes different kinds of roads casualties but to provide valuable results a focus has been made on pedestrians, cyclists and car occupants. The charts in Figure \ref{fig:2005-2006 } and Figure \ref{fig:2007-2012 } show the total number of fatal, serious and slight casualties in GB by road user type and month for each year between 2005 and 2012 .
+
+\begin{figure}[H]
+%\vspace{-3cm}
+\begin{minipage}[H]{.46\linewidth}
+  \centering
+    \includegraphics[width=6cm]{Images/plot1_2005}
+\end{minipage}
+\hspace{1cm}
+\begin{minipage}[H]{0.46\linewidth}
+  \centering
+     \includegraphics[width=6cm]{Images/plot1_2006}
+\end{minipage}
+\caption{Road casualties in GB by road user type and month in 2005 and 2006 }  
+ \label{fig:2005-2006 }
+ \end{figure}
+
+
+\begin{figure}[H]
+\begin{minipage}[H]{.46\linewidth}
+  \centering
+    \includegraphics[width=6cm]{Images/plot1_2007}
+\end{minipage}
+\hspace{1cm}
+\begin{minipage}[H]{0.46\linewidth}
+  \centering
+     \includegraphics[width=6cm]{Images/plot1_2008}
+\end{minipage}
+\begin{minipage}[H]{.46\linewidth}
+  \centering
+    \includegraphics[width=6cm]{Images/plot1_2009}
+\end{minipage}
+\hspace{1cm}
+\begin{minipage}[H]{0.46\linewidth}
+  \centering
+     \includegraphics[width=6cm]{Images/plot1_2010}
+\end{minipage}
+\begin{minipage}[H]{.46\linewidth}
+  \centering
+    \includegraphics[width=6cm]{Images/plot1_2011}
+\end{minipage}
+\hspace{1cm}
+\begin{minipage}[H]{0.46\linewidth}
+  \centering
+     \includegraphics[width=6cm]{Images/plot1_2012}
+\end{minipage}
+\caption{Road casualties in GB by road user type and month between 2007 and 2012 }  
+ \label{fig:2007-2012 }
+\end{figure}
+
+
+Using the data by year means that the patterns observed may be affected by unusual weather events. Considering the total number of casualties a change in the number of casualties at the end of the year seems to appear after 2006. The increase of general road casualties for car occupants in December is not relevant between 2007 and 2012 (Figure \ref{fig:2007-2012 }) but this must be interpreted with caution since all degrees of injury are considered (slight, serious, fatal). 
+
+
+For more clarity the rest of the analysis focuses on the the accident data of the most recent year available 2012. The different patterns for each mode are more clear when the chart is split by road user type and according to the accident severity (Figure \ref{fig:plot2_2012}).
+
+
+\begin{figure}[!h]
+\hspace{-1cm}
+\begin{minipage}[H]{.46\linewidth}
+  \centering
+    \includegraphics[width=7cm]{Images/plot2_2012}
+\end{minipage}
+\hspace{1cm}
+\begin{minipage}[H]{0.46\linewidth}
+  \centering
+     \includegraphics[width=7cm]{Images/plot3_2012}
+\end{minipage}
+\caption{Road casualties in GB by road user type and month in 2012 }  
+ \label{fig:plot2_2012}
+ \end{figure}
+ 
+ 
+A seasonal pattern for pedestrians and cyclists can observed, with pedestrian casualties increasing in winter, and cyclist casualties following more or less an opposite trend Figure(\ref{fig:plot2_2012}). It can be noticed that number of fatal and serious casualties for car occupant is highest in November and December (Figure \ref{fig:plot2_2012}).\\
+
+
+Same charts are provided for London (Figure \ref{fig:plot5_2012}). The casualty numbers by category shift around a lot with more pedestrians and cyclists and less car traffic than in the rest of the country. The seasonal patterns look less or more similar except that there is a much bigger increase in fatal or serious casualties for pedestrian towards the end of the year (December). For cyclists the obvious explanation for higher casualties in summer months is that more people cycle at that time of year. 
+
+\begin{figure}[!h]
+\vspace{-0.5cm}
+\hspace{-1cm}
+\begin{minipage}[b]{.46\linewidth}
+  \centering
+    \includegraphics[width=7cm]{Images/plot5_2012}
+\end{minipage}
+\hspace{1cm}
+\begin{minipage}[b]{0.46\linewidth}
+  \centering
+     \includegraphics[width=7cm]{Images/plot6_2012}
+\end{minipage}
+\caption{Road casualties in London by road user type and month in 2012 }  
+ \label{fig:plot5_2012}
+ \end{figure}
+
+
+\subsubsection*{Road casualties weekly pattern}
+
+Charts in Figure \ref{fig:plot4_2012} show the total number of fatal, serious and slight casualties in GB and in London by day of week for 2012. The casualty number of car occupants seems to increase on Friday in the GB chart and on Saturday and Sunday on the London chart which can be explained by the weekend effect.
+
+\begin{figure}[H]
+\hspace{-1cm}
+\begin{minipage}[b]{.46\linewidth}
+  \centering
+    \includegraphics[width=7cm]{Images/plot4_2012}
+\end{minipage}
+\hspace{1cm}
+\begin{minipage}[b]{0.46\linewidth}
+  \centering
+     \includegraphics[width=7cm]{Images/plot7_2012}
+\end{minipage}
+\caption{Road casualties in GB and in London by road user type and day of week in 2012 }  
+ \label{fig:plot4_2012}
+ \end{figure}
+
+
+%\vspace{3cm}
+
+
+%The chart below shows the total number of fatal and serious casualties in England and Wales by road user type and month in 2011:
+
+
+
+\subsubsection*{Road accidents and drivers}
+The charts in Figure \ref{fig:plot8_2012} shows the number of car accidents against the the driver gender in GB in 2012.
+It seems that men are more likely to be involved in car accidents in general and they are nearly twice as likely to be involved in fatal and serious road accidents.
+ 
+
+\begin{figure}[H]
+\hspace{-1cm}
+\vspace{-0.5cm}
+\begin{minipage}[b]{.46\linewidth}
+  \centering
+    \includegraphics[width=6cm]{Images/plot8_2012}
+\end{minipage}
+\hspace{1cm}
+\begin{minipage}[b]{0.46\linewidth}
+  \centering
+     \includegraphics[width=6cm]{Images/plot9_2012}
+\end{minipage}
+\caption{Road accidents according to the driver gender in GB in 2012 }  
+ \label{fig:plot8_2012}
+ \end{figure}
+ 
+The charts in Figure \ref{fig:plot13_2012} shows the number of car accidents against the driver age band in GB in 2012 and shows that 
+drivers between 26 and 35 are more likely to be involved in car accidents in general.
+ 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=7cm]{Images/plot13_2012}
+  \caption{Road accidents according to the driver age band in GB in 2012 }
+  \label{fig:plot13_2012}
+\end{figure} 
+ 
+ 
+\subsubsection*{Road accidents location}
+
+The charts in Figure \ref{fig:plot10_2012} shows the number of car accidents against the location near to a junction in GB in 2012. It should be noted that when most road accidents are likely to happen at junction location, fatal road accidents are more likely to happen at "not junction" location.
+
+ \begin{figure}[!h]
+ 
+\hspace{-1cm}
+\begin{minipage}[b]{.46\linewidth}
+  \centering
+    \includegraphics[width=6cm]{Images/plot10_2012}
+\end{minipage}
+\hspace{1cm}
+\begin{minipage}[b]{0.46\linewidth}
+  \centering
+     \includegraphics[width=6cm]{Images/plot11_2012}
+\end{minipage}
+\caption{Road accidents according to junction location in GB in 2012 }  
+ \label{fig:plot10_2012}
+ \end{figure}
+ 
+The chart in Figure \ref{fig:plot12_2012} shows the number of car accidents against the speed limit in GB in 2012. Again, it should be noted that when most road accidents are likely to happen under 30 mph, fatal road accidents are more likely to happen at 60 mph.
+ 
+ \begin{figure}[H]
+ \vspace{-0.5cm}
+  \centering
+  \includegraphics[width=7cm]{Images/plot12_2012}
+  \caption{Road accidents according to speed limit (mph) in GB in 2012 }
+  \label{fig:plot12_2012}
+\end{figure} 
+
+ 
+ 
+\section{Data associations}
+
+\subsection{Associations between the number of casualties other variables}
+The association between the number of casualties and the other variables of the data set have been investigated on a random sample of $20,000$ road accidents.
+No significant association with the other variables of the data set has been identified thanks to correlation computation with other numerical variable or contingency matrix with the categorical variables.
+
+
+
+
+
+\section{Hotspot prediction}
+
+
+\subsection{Variable selection} 
+
+The complete data set contains 54 variables and all of these variables are not useful for the data analysis. 
+The idea of hotspot prediction is to provide a model able to detect accident hotspot based on 
+Some of them are easy to put aside (accident index, vehicle reference, casualty reference) but the other 51 variables have to be reduced. 
+A factorial analysis have been applied on the data set to extract the most relevant variables (variables carrying most of the data information).
+Only the following variables have been used for the Hotspot prediction:
+\begin{itemize}
+\item Longitude
+\item Latitude
+\item Police Force
+\item Number of Vehicles
+\item Accident Severity
+\item Speed limit
+\item Junction Detail
+\item Junction Control
+\item Second Road Class
+\item Casualty Severity
+\item Urban or Rural Area
+\item Casualty Class
+\item Pedestrian Location
+\item Pedestrian Movement
+\item Casualty Type
+\item Vehicle Type
+\item Junction Location
+\end{itemize}
+
+
+
+\subsection{Prediction Model}
+A hotspot can be theoretically defined as a location that has a higher number of accidents than other similar locations. If we consider the density of accident in a given area the following heatmap can be computed for GB (Figure \ref{fig:density_2012}). The higher proportion of accident in cities is easy to infer. 
+
+ \begin{figure}[H]
+ %\vspace{-0.5cm}
+  \centering
+  \includegraphics[width=10cm]{Images/density}
+  \caption{Heatmap of accident density in GB in 2012 }
+  \label{fig:density_2012}
+\end{figure} 
+
+
+In this analysis we try to have a more accurate estimation of accident hotspots by computing the membership of each accident to one of the two classes $\{$ hotspot, not hotspot $\} $
+
+
+
+
+\subsubsection{Clustering with k-means}
+
+The k-means cluster analysis try to arrange similar elements into groups, characterized by their maximum homogeneity within
+a same cluster and the maximum heterogeneity between the clusters created.
+A sample of $5,000$ road accidents has been used as a learning set. K-means clustering has been applied for grouping accident hotspot on the basis of the selected variables into two clusters $\{$ hotspot, not hotspot $\}$. This sample has been selected from the previous random sample by omitting missing data.
+The idea of excluding the information relative to the location of the accident from the selected variables (Longitude, Latitude, Police Force) have been investigated but did not provide different results.
+
+
+
+\subsubsection{Performance and evaluations results of the predictive model}
+
+The evaluation of the results of the predictive model are not easy to asses. The following map (Figure \ref{fig:kmeansLondon}) the provides the result of the clustering obtained on a test set of $5,000$ road accidents in GB by focusing on London. Most of the point defined as hotspots are located on big axes or junctions. A comparison to the frequency of accident according to the LSOA (by selecting a threshold for the hotspots) had been tried but provided a very rough measure and the results of the K-means seem to produce a large number of false negatives. 
+
+\begin{figure}[H]
+ %\vspace{-0.5cm}
+  \centering
+  \includegraphics[width=10cm]{Images/kmeansLondon}
+  \caption{Hotspot location in London on the test set (red:hotspot, blue: not a hostpot)  }
+  \label{fig:kmeansLondon}
+\end{figure} 
+
+
+
+\section{Insights gained from the analysis}
+
+
+The Road safety data is a very rich data set with numerical categorical and spatial information on road accidents. This suggest that different approaches could probably be used to extract information.
+The hotspot detection and what it involves as identification methodologies and evaluation criteria are very interesting topics. The use of the K-means as a detection model seemed to be an easy way and there is probably more suitable models for hotspot detection.
+
+
+
+
+
+
+
+
+
+
+%\bibliography{rapport}
+%\bibliographystyle{abbrv}
+\end{document}

@@ -1,0 +1,202 @@
+\documentclass[a4paper,10pt]{article}
+%Updated on Jan 2016
+%A Few Useful Packages
+\usepackage{marvosym}
+\usepackage{fontspec} 					%for loading fonts
+\usepackage{xunicode,xltxtra,url,parskip} 	%other packages for formatting
+\RequirePackage{color,graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[big]{layaureo} 				%better formatting of the A4 page
+% an alternative to Layaureo can be ** \usepackage{fullpage} **
+\usepackage{supertabular} 				%for Grades
+\usepackage{titlesec}					%custom \section
+%\usepackage{fullpage}
+
+
+\usepackage{graphicx}
+%\usepackage{tabularx}
+
+
+
+%Setup hyperref package, and colours for links
+\usepackage{hyperref}
+
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour, linkcolor=linkcolour}
+
+\definecolor{myOrange}{rgb}{0.60,0.40,0}
+
+
+%FONTS
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont[SmallCapsFont = Fontin SmallCaps]{Fontin}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl
+\titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{3pt}{1pt}
+%Tweak a bit the top margin
+\addtolength{\voffset}{-0.5cm}
+%\addtolength{\hoffset}{-5cm}
+
+%Italian hyphenation for the word ''c:orporations''
+\hyphenation{im-pre-se}
+
+
+%--------------------BEGIN DOCUMENT----------------------
+\begin{document}
+
+
+\pagestyle{empty} % non-numbered pages
+
+\font\fb=''[cmr10]'' %for use with \LaTeX command
+
+
+\begin{tabular}{ll}
+
+\noindent\begin{tabular}{lr}
+
+\Large{\textbf{Zohra {UMANSKY}, Data Scientist}}&  \\
+  &	\\
+\textsc{Address:} &\\
+\textsc{Phone:} & \\
+\textsc{Email:} \href{mailto:namedotsurname@mail.com}{namedotsurname@mail.com} & 
+\end{tabular} &  	 	
+%\begin{tabular}{l}
+%\hspace{4.5cm}  \includegraphics[width=.85in]{pic.jpg}\\
+%\end{tabular}
+\end{tabular}
+
+
+\medskip
+
+
+
+%Section: Work Experience at the top
+\section{\textcolor{RedOrange}{Work Experience}}
+\begin{tabular}{r|p{14cm}}
+
+
+\textsc{Present}& \textbf{Data Scientist at \href{http://www.producthealth.com/}{Product Health Ltd.}}\\
+\textsc{May 2014}&\emph{Design and development of analytic services providing insights to our customers on the usage of their products}.\\
+& $\bullet$ {Analysing time series data recorded on batteries powered by solar panels.}\\
+& $\bullet$ Developing machine learning based algorithm to infer the system state of health. \\
+& $\bullet$ Customer segmentation based on unsupervised machine learning methods.\\
+& $\bullet$ Integration of the analytic services to our platform. \\
+& $\bullet$ Skills: Curve clustering,  data segmentation, data modelling, Gaussian processes, LLS regression, K-means, Splines, Polynomial Regression, R, Octave \& Python programming.\\
+&\footnotesize{\href{http://www.producthealth.com/}{Product Health}, London, United Kingdom.}\\ \multicolumn{2}{c}{} \\
+
+
+\textsc{Oct 2013}& \textbf{Onboard ATC System Architect at \href{http://www.getransportation.com/}{GE Transportation}}\\
+\textsc{Sep 2011}&\emph{R\&D Engineer at IKOS Consulting}.\\
+& $\bullet$ Design, specification and development of the Automatic Train Operation system from scratch using Matlab/Simulink for CBTC solution on the Delta Project.\\
+& $\bullet$ Integration/Application of the GE Tempo CBTC solution on one line of the MTR metro (GE CBTC pilot project in Hong Kong), Test \& Commissioning Activities on site.\\
+& $\bullet$ Skills: Train dynamics modelling, Speed and stopping precision control, Speed profile computation, Train characterization, Simulink modelling.\\
+&\footnotesize{\href{http://www.ikosconsulting.com/v3/index.php}{IKOS Consulting}, Paris Area, France.}\\ \multicolumn{2}{c}{} \\
+
+\textsc{Aug 2011}&\textbf{Ph.D. Computer Science} \\
+\textsc{Oct 2007}& \emph{Complex system diagnosis using generative models with prior information. Application to a railway signalling device.}\\
+& $\bullet$ Development of a fault detection and diagnosis tool for complex system components with machine learning approaches.
+Application to railway track circuit fault detection on DIAGHIST Project (\href{http://www.ifsttar.fr}{IFSTTAR}/\href{http://www.utc.fr}{UTC}/\href{http://www.sncf.com/}{SNCF}).\\
+& $\bullet$ Skills: Independent Factor Analysis, Independent Component Analysis, Linear Regression, Mixture Models, Hidden Markov Models, SVM, Evidential Theory, Matlab programming.\\
+& \footnotesize{\textsc{Heudiasyc} Laboratory (\href{http://www.utc.fr}{UTC}) and  \textsc{Grettia} laboratory (\href{http://www.ifsttar.fr}{IFSTTAR}), France}.\\ \multicolumn{2}{c}{} \\
+
+%& \\
+%\textsc{Aug 2011}& \textbf{Temporary Assistant Professor and Researcher}\\
+%\textsc{Oct 2010}&\emph{Teaching mathematics and C programming while finishing my Ph.D.}\\
+%                 &\footnotesize{Universit\'e Paris-Est Cr\'eteil Val de Marne, France.}\\ \multicolumn{2}{c}{} \\ 
+
+%&\textbf{Temporary Teacher} \\
+%& \emph{Algorithmic and Maple programming}.\\
+%& \footnotesize{Universit\'e Paris Dauphine and Lyc\'ee St Louis, Paris, France}.\\
+%& \emph{Signal Processing}.\\
+%&\footnotesize{ESIEA Engineering School, Paris, France.}\\\multicolumn{2}{c}{} \\
+
+\textsc{Sep 2007} & \textbf{Research Master Internship}  \\
+\textsc{Feb 2007}&\emph{Distributed data fusion: application to confidence management in vehicular networks.}\\
+& $\bullet$ Skills: Data Fusion, Evidential Theory, Matlab programming.\\
+&\footnotesize{\textsc{Heudiasyc} Laboratory (\href{http://www.utc.fr}{UTC}), Compi\`egne, France.}\\\multicolumn{2}{c}{} \\
+ 
+%\textsc{Jul 2006} & \textbf{Graduation project}\\
+%\textsc{Oct 2005}&\emph{Polymorphic worm design and development on GNU/\textsc{Linux} platform, C \& ASM programming}\\
+%&\footnotesize{Computer Science Department of \href{http://www.usthb.dz}{USTHB}, Algiers, Algeria}.\\\multicolumn{2}{c}{} \\
+
+%\textsc{Aug 2004} & \textbf{Network administration Internship}\\
+%\textsc{Jul 2004}&\emph{Web, Mail, FTP and SMTP servers administration on \textsc{Linux} plateform.}\\
+%&\footnotesize{Soci\'et\'e de prestations Electroniques et Informatiques SEI, Algiers, Algeria.}
+\end{tabular}
+
+%Section: Education
+\section{\textcolor{RedOrange}{Education}}
+\begin{tabular}{rp{13.8cm}}	
+ \textsc{Oct 2011}  & \textbf{Ph.D. in Computer Science}\\
+ &\textsc{Heudiasyc} laboratory of \href{http://www.utc.fr/the_university/index.php}{UTC} and \textsc{Grettia} laboratory of \href{http://www.ifsttar.fr}{IFSTTAR}, France.\\
+
+
+\textsc{Sep 2007}& \textbf{Master of Science in Computer Science and Machine Learning}\\
+& \textsc{M.Sc. Technologie de l'Information et des Syst\`emes} (graduated with honours). \\
+& Universit\'e de Technologie de Compi\`egne (\href{http://www.utc.fr/the_university/index.php}{UTC}), France. \\
+
+\textsc{Jul 2006} & \textbf{Engineer in Computer Science}\\
+ & \textsc{Computer Science Engineer} (graduated with honours). \\
+ & Science and Technology University of Algiers (\href{http://www.usthb.dz}{USTHB}), Algeria.\\
+
+\end{tabular}
+
+%Section: Languages
+
+
+\section{\textcolor{RedOrange}{Skills}}
+\begin{tabular}{rp{13.8cm}}
+Operating Systems:& \textsc{Linux, Mac OS, Windows}.\\
+IT Languages:& \textsc{R, Matlab\& Simulink, Python, Bash, Java, C, SQL, ASM, Maple}.\\
+
+
+Languages:& \textsc{English} (fluent), \textsc{French} (fluent), \textsc{Arabic} (fluent).
+\end{tabular}
+
+
+
+
+\section{\textcolor{RedOrange}{Scientific Publications}}
+%\begin{tabular}{rp{14.2cm}}
+
+\medskip
+\textbf{International Publications}\\
+\begin{tabular}{rp{14.2cm}}
+& \\
+$\bullet$ & \textbf{Z.L. Cherfi}, L. Oukhellou, P. Aknin and T. Den\oe ux (2011). Using imprecise and uncertain information to enhance the diagnosis of a railway device. In S. Li et al. (Eds), Non Linear Mathematics for Uncertainty and its Applications, Beijing, China, pages 213-220, September 2011. Advances in Intelligent and Soft Computing Vo. 100, Springer.\\
+& \\
+$\bullet$ & \textbf{Z.L. Cherfi}, L. Oukhellou, E. C\^ome, T. Den\oe ux, P. Aknin (2011) Fault diagnosis using partially reliable information. International Conference on Nonlinear Mathematics, Uncertainty and Applications (NLMUA), Beijing.\\
+& \\
+$\bullet$ & \textbf{Z.L. Cherfi}, L. Oukhellou, T. Den\oe ux, P. Aknin (2010) Using imprecise and uncertain information to enhance the diagnosis of a railway device. 3rd International Conference of the ERCIM Working Group on Computing $\&$ Statistics, London. \\
+\end{tabular}
+
+\begin{tabular}{rp{14.2cm}}
+$\bullet$ & \textbf{Z.L. Cherfi}, E. C\^ome, L. Oukhellou, P. Aknin (2009) Railway device diagnosis using sparse independent component analysis. EUSIPCO'09 European Signal Processing Conference, Glasgow. \\
+& \\
+$\bullet$ & \textbf{Z.L. Cherfi}, L. Oukhellou, P. Aknin (2009) Using independent component analysis for the diagnosis of large scale railway system. CM'09 Control Monitoring. Dublin.\\
+& \\
+$\bullet$ & E. C\^ome, \textbf{Z.L. Cherfi}, L. Oukhellou, P. Aknin (2008) Semi supervised IFA with prior knowledge on the mixing process. Application to a railway diagnosis. ICMLA'2008 7th International Conference on Machine Learning and Applications. San Diego. \\
+& \\
+$\bullet$ & V. Cherfaoui, T. Den\oe ux, \textbf{Z.L. Cherfi} (2008) Distributed data fusion: application to confidence management in vehicular networks. FUSION International Conference on Information Fusion, Cologne, pp. 846-853.\\\multicolumn{2}{c}{} \\
+\end{tabular}
+
+
+\textbf{Book Chapter} \\
+\begin{tabular}{rp{14.2cm}}
+& \\
+$\bullet$ & V. Cherfaoui, T. Den\oe ux ,  \textbf{Z.L. Cherfi} (2009) Confidence management in vehicular networks (chap. 13). In H. Moustafa and Y. Zhang (Eds), Vehicular Networks: Techniques, Standards and Applications, CRC Press, pages 355-377.
+\end{tabular}
+
+
+
+\section{\textcolor{RedOrange}{Interests and Activities}}
+\begin{tabular}{rl}
+AI applications, Robotics, Tennis, Running, Snowboarding, Scuba Diving.
+\end{tabular}
+\vspace*{-1cm}
+
+
+
+\end{document}
